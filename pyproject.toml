@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "assistant"
+version = "0.1.0"
+description = ""
+authors = ["Michele <silviamlteles@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+twilio = "^7.16.0"
+beautifulsoup4 = "^4.11.1"
+speechrecognition = "^3.9.0"
+wolframalpha = "^5.0.0"
+pyttsx3 = "^2.90"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
