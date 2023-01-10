@@ -1,18 +1,45 @@
-# Import the required module for text
-# to speech conversion
-import pyttsx3
+import speech_recognition as sr
 
-# init function to get an engine instance for the speech synthesis
-engine = pyttsx3.init("espeak")
+from openapi_adapter.open_api import open_api_search
+from speaker.speak import speak
 
-voices = engine.getProperty('voices')
+recognition = sr.Recognizer()
 
-assistant_voice = voices[58]
+print("Python Assistant")
 
-engine.setProperty('voice', assistant_voice.id)
+microphone_list = sr.Microphone.list_microphone_names()
 
-# say method on the engine that passing input text to be spoken
-engine.say('Olá, como posso te ajudar?')
+print(microphone_list)
 
-# run and wait method, it processes the voice commands.
-engine.runAndWait()
+microphone_index = microphone_list.index("default") if "default" in microphone_list else microphone_list[0]
+
+
+def main():
+    with sr.Microphone(device_index=microphone_index) as source:
+        recognition.adjust_for_ambient_noise(source=source)
+
+        print("We're listening u!")
+
+        audio = recognition.listen(source)
+
+        try:
+            print(f"Audio object: <{audio}>")
+
+            text = recognition.recognize_google(audio)
+
+            answer = open_api_search(text)
+
+            print(answer)
+
+            # speak(answer)
+
+        except:
+            print("I can't understand...")
+
+
+if __name__ == "__main__":
+    while True:
+        main()
+
+# sudo apt install portaudio19-dev
+# sudo apt-get install python3-pyaudio
