@@ -1,7 +1,6 @@
 import speech_recognition as sr
 
 from openapi_adapter.open_api import open_api_search
-from speaker.speak import speak
 
 recognition = sr.Recognizer()
 
@@ -11,7 +10,8 @@ microphone_list = sr.Microphone.list_microphone_names()
 
 print(microphone_list)
 
-microphone_index = microphone_list.index("default") if "default" in microphone_list else microphone_list[0]
+microphone_index = microphone_list.index("default") \
+    if "default" in microphone_list else microphone_list[0]
 
 
 def main():
@@ -31,15 +31,12 @@ def main():
 
             print(answer)
 
-            # speak(answer)
-
         except:
             print("I can't understand...")
 
 
 if __name__ == "__main__":
-    while True:
-        main()
+    main()
 
 # sudo apt install portaudio19-dev
 # sudo apt-get install python3-pyaudio
